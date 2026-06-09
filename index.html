@@ -166,6 +166,7 @@
 
         .cell.state-X {
             color: var(--cross-color);
+            background-color: transparent;
         }
 
         .cell.state-V {
@@ -201,7 +202,7 @@
         <h2>Spelregels & Bediening</h2>
         <ul class="instructions-list">
             <li><strong>1x Klikken:</strong> Zet een rood kruisje (<span style="color:var(--cross-color); font-weight:bold;">X</span>) als een combinatie onmogelijk is.</li>
-            <li><strong>2x Klikken:</strong> Zet een groen vinkje (<span style="color:var(--check-color); font-weight:bold;">✓</span>) als de combinatie klopt. <em>De rest van de rij en kolom in dat vak wordt direct automatisch weggestreept!</em></li>
+            <li><strong>2x Klikken:</strong> Zet een groen vinkje (<span style="color:var(--check-color); font-weight:bold;">✓</span>) — <em>de rest van de huidige rij en kolom krijgt direct automatisch een X!</em></li>
             <li><strong>3x Klikken:</strong> Maakt het vakje weer helemaal leeg.</li>
         </ul>
     </div>
@@ -291,4 +292,72 @@
 <script>
     function cycleState(cell) {
         const table = document.getElementById('logicGrid');
-        const rowIndex = cell
+        const rowIndex = cell.parentElement.rowIndex;
+        const colIndex = cell.cellIndex;
+
+        if (!cell.classList.contains('state-X') && !cell.classList.contains('state-V')) {
+            // 1e klik: Alleen een X
+            cell.classList.add('state-X');
+            cell.innerText = 'X';
+        } else if (cell.classList.contains('state-X')) {
+            // 2e klik: Wordt Vinkje + geef de rest van de rij/kolom een X binnen zijn sub-deel
+            cell.classList.remove('state-X');
+            cell.classList.add('state-V');
+            cell.innerText = '✓';
+            autoCrossRowAndColumn(table, rowIndex, colIndex, cell);
+        } else {
+            // 3e klik: Weer leeg
+            cell.classList.remove('state-V');
+            cell.innerText = '';
+        }
+    }
+
+    function autoCrossRowAndColumn(table, rIdx, cIdx, activeCell) {
+        // Bepaal de dynamische grenzen van de sub-secties in de tabel om fouten te voorkomen
+        // Blokken zijn verdeeld op basis van kolommen 1-3 en kolommen 4-6
+        const startCol = cIdx <= 3 ? 1 : 4;
+        const endCol = cIdx <= 3 ? 3 : 6;
+        
+        // Blokken zijn verticaal verdeeld op basis van rijen 1-3 en rijen 4-6
+        const startRow = rIdx <= 3 ? 1 : 4;
+        const endRow = rIdx <= 3 ? 3 : 6;
+
+        // 1. Vul de bijbehorende RIJ binnen de sub-categorie met X'en
+        const currentRow = table.rows[rIdx];
+        for (let c = startCol; c <= endCol; c++) {
+            let targetCell = currentRow.cells[c];
+            if (targetCell && targetCell !== activeCell && targetCell.classList.contains('cell')) {
+                // Alleen overschrijven als er niet al een vinkje staat
+                if (!targetCell.classList.contains('state-V')) {
+                    targetCell.className = 'cell state-X';
+                    targetCell.innerText = 'X';
+                }
+            }
+        }
+
+        // 2. Vul de bijbehorende KOLOM binnen de sub-categorie met X'en
+        for (let r = startRow; r <= endRow; r++) {
+            let targetRow = table.rows[r];
+            if (targetRow) {
+                let targetCell = targetRow.cells[cIdx];
+                if (targetCell && targetCell !== activeCell && targetCell.classList.contains('cell')) {
+                    if (!targetCell.classList.contains('state-V')) {
+                        targetCell.className = 'cell state-X';
+                        targetCell.innerText = 'X';
+                    }
+                }
+            }
+        }
+    }
+
+    function resetGrid() {
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.className = 'cell';
+            cell.innerText = '';
+        });
+    }
+</script>
+
+</body>
+</html>
