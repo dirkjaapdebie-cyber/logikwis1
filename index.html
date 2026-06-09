@@ -48,7 +48,6 @@
             width: 100%;
         }
 
-        /* Logische Vakken / Cards */
         .content-box {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -67,23 +66,36 @@
             padding-bottom: 8px;
         }
 
-        .instructions-list {
+        .instructions-list, .clues-list {
             margin: 0;
             padding-left: 20px;
             line-height: 1.6;
-        }
-
-        .clues-list {
-            margin: 0;
-            padding-left: 20px;
         }
 
         .clues-list li {
             margin-bottom: 12px;
-            line-height: 1.6;
         }
 
-        /* Het Logikwis Raster Vak */
+        /* Succes melding */
+        #winMessage {
+            display: none;
+            background-color: #c6f6d5;
+            border: 2px solid #38a169;
+            color: #22543d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         .grid-container {
             display: flex;
             flex-direction: column;
@@ -166,7 +178,6 @@
 
         .cell.state-X {
             color: var(--cross-color);
-            background-color: transparent;
         }
 
         .cell.state-V {
@@ -198,12 +209,14 @@
     <h1>Logikwis: Triomfen uit het Verleden</h1>
     <div class="subtitle">Moeilijkheidsgraad: ★★★☆☆ (Gemiddeld / Uitdagend)</div>
     
+    <div id="winMessage">🎉 Gefeliciteerd! Je hebt de logikwis vlijmscherp en historisch correct opgelost! 🎯</div>
+
     <div class="content-box">
         <h2>Spelregels & Bediening</h2>
         <ul class="instructions-list">
-            <li><strong>1x Klikken:</strong> Zet een rood kruisje (<span style="color:var(--cross-color); font-weight:bold;">X</span>) als een combinatie onmogelijk is.</li>
-            <li><strong>2x Klikken:</strong> Zet een groen vinkje (<span style="color:var(--check-color); font-weight:bold;">✓</span>) — <em>de rest van de huidige rij en kolom krijgt direct automatisch een X!</em></li>
-            <li><strong>3x Klikken:</strong> Maakt het vakje weer helemaal leeg.</li>
+            <li><strong>1x Klikken:</strong> Zet een rood kruisje (X).</li>
+            <li><strong>2x Klikken:</strong> Zet een groen vinkje (✓) — <em>de rest van de rij en kolom krijgt direct een X!</em></li>
+            <li><strong>3x Klikken:</strong> Maakt het vakje weer leeg.</li>
         </ul>
     </div>
 
@@ -235,50 +248,50 @@
                 <tbody>
                     <tr>
                         <td class="row-header">Giacomo</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Giacomo" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Giacomo" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="Giacomo" data-col="1451" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Giacomo" data-col="Boogschutters" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Giacomo" data-col="Janitsaren" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Giacomo" data-col="Ridders" onclick="cycleState(this)"></td>
                     </tr>
                     <tr>
                         <td class="row-header">Henry V</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="HenryV" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="HenryV" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="HenryV" data-col="1451" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="HenryV" data-col="Boogschutters" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="HenryV" data-col="Janitsaren" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="HenryV" data-col="Ridders" onclick="cycleState(this)"></td>
                     </tr>
                     <tr class="block-boundary">
                         <td class="row-header">Murad II</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="MuradII" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="MuradII" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="MuradII" data-col="1451" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="MuradII" data-col="Boogschutters" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="MuradII" data-col="Janitsaren" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="MuradII" data-col="Ridders" onclick="cycleState(this)"></td>
                     </tr>
                     <tr>
                         <td class="row-header">Boogschutters</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Boogschutters" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Boogschutters" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="Boogschutters" data-col="1451" onclick="cycleState(this)"></td>
                         <td colspan="3" style="background:#e2e8f0; border:none; cursor:default;"></td>
                     </tr>
                     <tr>
                         <td class="row-header">Janitsaren</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Janitsaren" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Janitsaren" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="Janitsaren" data-col="1451" onclick="cycleState(this)"></td>
                         <td colspan="3" style="background:#e2e8f0; border:none; cursor:default;"></td>
                     </tr>
                     <tr class="block-boundary">
                         <td class="row-header">Ridders</td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell" onclick="cycleState(this)"></td>
-                        <td class="cell block-boundary" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Ridders" data-col="1379" onclick="cycleState(this)"></td>
+                        <td class="cell" data-row="Ridders" data-col="1415" onclick="cycleState(this)"></td>
+                        <td class="cell block-boundary" data-row="Ridders" data-col="1451" onclick="cycleState(this)"></td>
                         <td colspan="3" style="background:#e2e8f0; border:none; cursor:default;"></td>
                     </tr>
                 </tbody>
@@ -290,44 +303,50 @@
 </div>
 
 <script>
+    // De exacte unieke combinaties die correct zijn op basis van de historische puzzellogica
+    const correctCombinations = [
+        {row: "Giacomo", col: "1379"},
+        {row: "Giacomo", col: "Ridders"},
+        {row: "HenryV", col: "1415"},
+        {row: "HenryV", col: "Boogschutters"},
+        {row: "MuradII", col: "1451"},
+        {row: "MuradII", col: "Janitsaren"},
+        {row: "Boogschutters", col: "1415"},
+        {row: "Janitsaren", col: "1451"},
+        {row: "Ridders", col: "1379"}
+    ];
+
     function cycleState(cell) {
         const table = document.getElementById('logicGrid');
         const rowIndex = cell.parentElement.rowIndex;
         const colIndex = cell.cellIndex;
 
         if (!cell.classList.contains('state-X') && !cell.classList.contains('state-V')) {
-            // 1e klik: Alleen een X
             cell.classList.add('state-X');
             cell.innerText = 'X';
         } else if (cell.classList.contains('state-X')) {
-            // 2e klik: Wordt Vinkje + geef de rest van de rij/kolom een X binnen zijn sub-deel
             cell.classList.remove('state-X');
             cell.classList.add('state-V');
             cell.innerText = '✓';
             autoCrossRowAndColumn(table, rowIndex, colIndex, cell);
+            checkSolution(); // Check na elk geplaatst vinkje of de puzzel compleet is
         } else {
-            // 3e klik: Weer leeg
             cell.classList.remove('state-V');
             cell.innerText = '';
+            document.getElementById('winMessage').style.display = 'none'; // Verberg melding bij wijziging
         }
     }
 
     function autoCrossRowAndColumn(table, rIdx, cIdx, activeCell) {
-        // Bepaal de dynamische grenzen van de sub-secties in de tabel om fouten te voorkomen
-        // Blokken zijn verdeeld op basis van kolommen 1-3 en kolommen 4-6
         const startCol = cIdx <= 3 ? 1 : 4;
         const endCol = cIdx <= 3 ? 3 : 6;
-        
-        // Blokken zijn verticaal verdeeld op basis van rijen 1-3 en rijen 4-6
         const startRow = rIdx <= 3 ? 1 : 4;
         const endRow = rIdx <= 3 ? 3 : 6;
 
-        // 1. Vul de bijbehorende RIJ binnen de sub-categorie met X'en
         const currentRow = table.rows[rIdx];
         for (let c = startCol; c <= endCol; c++) {
             let targetCell = currentRow.cells[c];
             if (targetCell && targetCell !== activeCell && targetCell.classList.contains('cell')) {
-                // Alleen overschrijven als er niet al een vinkje staat
                 if (!targetCell.classList.contains('state-V')) {
                     targetCell.className = 'cell state-X';
                     targetCell.innerText = 'X';
@@ -335,7 +354,6 @@
             }
         }
 
-        // 2. Vul de bijbehorende KOLOM binnen de sub-categorie met X'en
         for (let r = startRow; r <= endRow; r++) {
             let targetRow = table.rows[r];
             if (targetRow) {
@@ -350,12 +368,40 @@
         }
     }
 
+    // Controleer of de puzzel foutloos is opgelost
+    function checkSolution() {
+        const cells = document.querySelectorAll('.cell');
+        let correctCount = 0;
+        let totalVinkjes = 0;
+
+        cells.forEach(cell => {
+            if (cell.classList.contains('state-V')) {
+                totalVinkjes++;
+                const rowId = cell.getAttribute('data-row');
+                const colId = cell.getAttribute('data-col');
+                
+                // Kijk of dit vinkje matcht met de ingebouwde oplossing
+                const isCorrect = correctCombinations.some(comb => comb.row === rowId && comb.col === colId);
+                if (isCorrect) {
+                    correctCount++;
+                }
+            }
+        });
+
+        // Er zijn exact 9 juiste vinkjes nodig voor de totale oplossing
+        if (totalVinkjes === 9 && correctCount === 9) {
+            document.getElementById('winMessage').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll rustig omhoog naar de winnaarsbannner
+        }
+    }
+
     function resetGrid() {
         const cells = document.querySelectorAll('.cell');
         cells.forEach(cell => {
             cell.className = 'cell';
             cell.innerText = '';
         });
+        document.getElementById('winMessage').style.display = 'none';
     }
 </script>
 
